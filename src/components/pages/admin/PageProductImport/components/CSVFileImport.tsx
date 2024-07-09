@@ -27,14 +27,15 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
   const uploadFile = async () => {
     console.log("uploadFile to", url);
-    const token = localStorage.getItem("authorization_token") || "";
     // Get the presigned URL
     if (file) {
+      const localStorageToken = localStorage.getItem("authorization_token");
       try {
+        const authHeaders = {
+          Authorization: `Basic ${localStorageToken}`,
+        };
         const response = await axios({
-          headers: {
-            Authorization: `Basic ${token}`,
-          },
+          headers: localStorageToken ? authHeaders : {},
           method: "GET",
           url,
           params: {
@@ -51,16 +52,6 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
         setFile(undefined);
       } catch (error) {
         console.log(error);
-        if (axios.isAxiosError(error)) {
-          const status = error.response?.status;
-          if (status === 401 || status === 403) {
-            const msg =
-              status === 401
-                ? "Provide authorization_token"
-                : "Invalid authorization_token";
-            toast.error(`Error ${status}: ${msg}`);
-          }
-        }
       }
     }
   };
