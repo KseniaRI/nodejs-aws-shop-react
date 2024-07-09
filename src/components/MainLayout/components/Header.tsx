@@ -34,6 +34,7 @@ export default function Header() {
             flexGrow: 1,
             alignItems: "center",
             gap: "10px",
+            color: "black",
           }}
         >
           <Link
