@@ -35,9 +35,19 @@ export function useUpdateOrderStatus() {
 
 export function useSubmitOrder() {
   return useMutation((values: Omit<Order, "id">) => {
-    return axios.put<Omit<Order, "id">>(
+    const reqBody = {
+      payment: {
+        type: "default",
+      },
+      delivery: {
+        type: "default",
+        address: values.address.address,
+      },
+      comments: values.address.comment,
+    };
+    return axios.post<Omit<Order, "id">>(
       `${API_PATHS.order}/cart/checkout`,
-      values,
+      reqBody,
       {
         headers: {
           Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
