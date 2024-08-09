@@ -7,7 +7,7 @@ import { Product } from "~/models/Product";
 
 export function useCart() {
   return useQuery("cart", async () => {
-    const res = await axios.get(`${API_PATHS.cart}/cart`, {
+    const res = await axios.get(`${API_PATHS.bff}/cart`, {
       headers: {
         Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
       },
@@ -55,7 +55,7 @@ export function useUpsertCart() {
     const { product, count } = values;
     const reqBody = { items: [{ productId: product.id, count }] };
     console.log(reqBody);
-    return axios.put<CartItem[]>(`${API_PATHS.cart}/cart`, reqBody, {
+    return axios.put<CartItem[]>(`${API_PATHS.bff}/cart`, reqBody, {
       headers: {
         Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
       },

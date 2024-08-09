@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import { formatAsPrice } from "~/utils/utils";
 import AddProductToCart from "~/components/AddProductToCart/AddProductToCart";
 import { useAvailableProducts } from "~/queries/products";
-import imagesData from "~/images/data.json";
 
 export default function Products() {
   const { data = [], isLoading } = useAvailableProducts();
@@ -20,7 +19,6 @@ export default function Products() {
     <Grid container spacing={4}>
       {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
       {data.map(({ count, ...product }, index) => {
-        const img = imagesData.find((img) => img.product_id === product.id);
         return (
           <Grid item key={product.id} xs={12} sm={6} md={4}>
             <Card
@@ -32,7 +30,7 @@ export default function Products() {
                   objectFit: "contain",
                   objectPosition: "center",
                 }}
-                image={img?.source || "images/logo.jpg"}
+                image={product.source || "images/logo.jpg"}
                 title="Image title"
               />
               <CardContent sx={{ flexGrow: 1 }}>
